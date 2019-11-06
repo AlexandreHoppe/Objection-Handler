@@ -1,0 +1,17 @@
+<apex:page standardController="Lead" extensions="dynamicScript" showHeader="false" sidebar="false">
+    <div style="padding-top:10px;">
+
+        <apex:form >
+            <apex:selectList value="{!Option}" size="1">
+                <apex:selectOptions value="{!optionList}"/>
+                <apex:actionSupport event="onchange" action="{!TestM}" reRender="out" />
+            </apex:selectList>
+        </apex:form>
+    </div>
+    
+    <div style="padding-top:10px;">
+        <apex:outputText id="out" escape="false" value="{!Option}" />
+    </div>
+        
+    
+</apex:page>

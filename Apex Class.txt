@@ -1,0 +1,76 @@
+public class dynamicScript {
+	private final Lead lead;
+    public string option {get;set;}
+    public List<selectOption> optionList {get;set;}
+    
+    public List<Lead> leadInfo {get;set;}
+    
+    public PageReference TestM(){return null;}
+    
+    public dynamicScript(ApexPages.StandardController controller) {
+        this.lead = (Lead)controller.getRecord();
+        
+        string LeadJID = controller.getId();
+        
+        ApexPages.currentPage().getParameters().get('id');
+        leadInfo = [SELECT FIRSTNAME, LASTNAME FROM Lead WHERE ID = :LeadJID];
+        
+        string textSpouse = 'We would want your Spouse at the appointment as well so all decisions would be made ' 
+            					 + 'togethers. Let us go ahead and book the Appointment so we can reserve the time for you. '
+            					 + 'If your needs change, we can always adjust the day and time. How does [Appointment Day] at '
+            					 + ' [Appoitment Time] sound or does [Another Appointment Time] work better?';
+        
+        string textJustLooking = 'I love looking at homes too. It is why I got into the business. What prompted you to '
+            					  + 'look at homes today?';
+        
+        string textHasAgent = '9 OUT OF 10 TIMES; THEY DONT HAVE AN AGENT<br><br>'
+            					+ 'Fantastic, I can send this information over to them; but it concerns me they havent signed '
+            			 		+ 'a buyer/broker agreement with you yet. It protects you as a potential Home Owner. <br><br> '
+            					+ ' IF LEAD DOES NOT HAVE AN AGREEMENT: <br><br> Since you don\'t have an agreement; let us get you inside to look at this home';
+        
+		string textPriceOnly = 'MOST OF THE TIME, THIS IS CURIOSITY AND NOT THE DECIDING FACTOR; MOST PEOPLE LIKE THE STYLE HOME '
+            				 + 'OF ITS CLOSE FOR COMMUTING. YOU NEED TO ASK DESCRIBE + TELL ME ABOUT TYPE OF QUESTIONS <br><br>'
+            				 + 'Sure, let me find the details on this home. While I am looking this up, tell me what interests you'
+            				 + ', about this home. <br><br> THEY WILL DRIVE BACK TO PRICE, SO BE READY WITH ANOTHER DESCRIBE + '
+            				 + 'TELL ME ABOUT QUESTION. <br><br>Let me see if there are any price reduction in our system, <br><br>'
+            				 + '- What other homes have you been looking at? <br>- What financing actions have you already taken?'; 
+        
+        string textLookingFamily = 'That\'s great, you are looking for family, it shows you want the best for them. We are ranked in ' 
+            					 + 'the top 5% nationally of Brokerages and you can find us on the top 5,000 fastest growing companies, '
+            					 + 'so I am glad you found us, we can help. What information can I provide? We can get you inside any '
+            					 + 'houses in the area, what other homes are you looking for? <br><br> YOU WANT THE NAME + NUMBER OF '
+            					 + 'THE FAMILY MEMBER, SO KEEP ASKING';
+        
+        string textRelativeAgent = 'Perfect! Are you confortable sharing all of your personal information with them? As you know in the '
+            					 + 'home Buying/Selling process, all of your financial data is Front/Center. I know I would not want knowing' 
+            					 + ' too much about me. Are you sure you want your friend knowing your financial business? <br><br>'
+            					 + 'SOME PEOPLE GET AGITATED, IT\'S OK; JUST APOLOGIZE AND MOVE ON.';
+        
+        string textRenting = 'You are paying a mortgage either way, let us stop paying your landlords mortgage + start building '
+            			   + 'equity for yourself. What challenges do you think are holding you back? <br><br> MOST COMMON ARE '
+            			   + 'CREDIT, LACK OF INFORMATION ABOUT THE PROCESS/FEAR OF THE UNKNOWN AND DOWN PAYMENT. KNOW YOUR '
+            			   + 'OPTION FOR THESE.';
+        
+        string textBadCredit = 'Do not let this hold you back! What have you done to identify and correct any credit challenges? '
+            				 + 'We have someone, who for a small monthly fee can review your credit and help get any challenges '
+            				 + 'cleared up. He even helps people with good credit boost their scores to qualify for better loan '
+            				 + 'type and rates. This saves tens of thousands of dollars over the life of the loan. Can I transfer '
+            				 + 'you over to have a free consultation? <br><br> TASK AND FOLLOW EVERY COUPLE OF WEEKS TO CHECK IN'
+            				 + ' AND CHEER LEAD FOR THEM!';
+        
+        string textContactedTooMuch = '1st, let me apologize. We are in a very fast paced market right now and I want to make '
+            						+ 'sure you do not miss any deals. How often would you like to be updated?';
+        
+		optionList = new List<selectOption>();
+        optionList.add(new selectOption('', '------None-----'));
+        optionList.add(new selectOption(textBadCredit, 'Bad Credit'));
+        optionList.add(new selectOption(textContactedTooMuch, 'Contacted Too Much'));
+        optionList.add(new selectOption(textRelativeAgent, 'Friend/Family is Agent'));
+        optionList.add(new selectOption(textHasAgent, 'Has an Agent'));
+        optionList.add(new selectOption(textJustLooking, 'Just Looking'));
+        optionList.add(new selectOption(textLookingFamily, 'Looking For Family'));
+        optionList.add(new selectOption(textPriceOnly, 'Price Inquiry'));
+        optionList.add(new selectOption(textRenting, 'Renting (Just Looking)'));
+        optionList.add(new selectOption(textSpouse, 'Spouse'));
+    }
+}
